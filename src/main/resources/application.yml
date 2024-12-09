@@ -1,0 +1,19 @@
+
+
+spring:
+  application:
+    name: Finances
+  datasource:
+    url: jdbc:postgresql://localhost:5432/finances
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non-contextual-creation: true
