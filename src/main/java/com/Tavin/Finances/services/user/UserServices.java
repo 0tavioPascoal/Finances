@@ -1,4 +1,4 @@
-package com.Tavin.Finances.services;
+package com.Tavin.Finances.services.user;
 
 import com.Tavin.Finances.entities.UserModel;
 import com.Tavin.Finances.repository.UserRepository;
@@ -32,7 +32,22 @@ public class UserServices {
          userRepository.save(user);
     }
 
+    public Page<UserModel> findAll(String name, Integer page, Integer pageSize) {
+        UserModel user = new UserModel();
+        user.setName(name);
 
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING)
+                .withIgnoreCase()
+                .withIgnoreNullValues();
+        Example<UserModel> example = Example.of(user, matcher);
+
+        Pageable pageable = PageRequest.of(page, pageSize);
+        return userRepository.findAll(example, pageable);
+
+
+
+    }
 
 }
 

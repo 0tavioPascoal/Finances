@@ -1,8 +1,8 @@
-package com.Tavin.Finances.infra.mappers;
+package com.Tavin.Finances.infra.mappers.user;
 
 import com.Tavin.Finances.entities.UserModel;
-import com.Tavin.Finances.infra.dto.UserRequestDto;
-import com.Tavin.Finances.infra.dto.UserResponseDto;
+import com.Tavin.Finances.infra.dto.usersdto.UserRequestDto;
+import com.Tavin.Finances.infra.dto.usersdto.UserResponseDto;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

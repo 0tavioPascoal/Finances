@@ -1,4 +1,4 @@
-package com.Tavin.Finances.infra.dto;
+package com.Tavin.Finances.infra.dto.usersdto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

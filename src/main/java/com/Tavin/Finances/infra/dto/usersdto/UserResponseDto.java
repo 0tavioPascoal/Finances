@@ -1,4 +1,4 @@
-package com.Tavin.Finances.infra.dto;
+package com.Tavin.Finances.infra.dto.usersdto;
 
 import java.util.UUID;
 
