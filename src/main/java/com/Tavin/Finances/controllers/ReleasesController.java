@@ -5,11 +5,14 @@ import com.Tavin.Finances.entities.enuns.StatusReleases;
 import com.Tavin.Finances.entities.enuns.TypeReleases;
 import com.Tavin.Finances.infra.dto.releasesdto.ReleasesRequestDto;
 import com.Tavin.Finances.infra.dto.releasesdto.ReleasesResponseDto;
+import com.Tavin.Finances.infra.dto.releasesdto.ReleasesStatusDto;
+import com.Tavin.Finances.infra.dto.releasesdto.ReleasesTypeDto;
 import com.Tavin.Finances.infra.header.GeneratedHeader;
 import com.Tavin.Finances.infra.mappers.releases.ReleasesMapper;
 import com.Tavin.Finances.services.releases.ReleasesService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -54,6 +57,26 @@ public class ReleasesController implements GeneratedHeader {
                 }).orElse(ResponseEntity.notFound().build());
     }
 
+    @PutMapping("/status")
+    public ResponseEntity<Object> updatedStatus(@RequestBody @Valid ReleasesStatusDto status
+            , @RequestParam String id){
+        return Service.findById(UUID.fromString(id))
+                .map(ReleasesModel -> {
+                    Service.updatedStatus(ReleasesModel, status.status());
+                    return ResponseEntity.ok().build();
+                }).orElseGet(()-> ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/type")
+    public ResponseEntity<Object> updatedType(@RequestBody @Valid ReleasesTypeDto typeDto,
+                                              @RequestParam String id){
+        return Service.findById(UUID.fromString(id))
+                .map(ReleasesModel -> {
+                    Service.updatedTypeReleases(ReleasesModel, typeDto.type());
+                    return ResponseEntity.ok().build();
+                }).orElseGet(()-> ResponseEntity.notFound().build());
+    }
+
     @DeleteMapping()
     public ResponseEntity<Object> delete(@RequestParam String id){
         return Service.findById(UUID.fromString(id))
@@ -88,5 +111,14 @@ public class ReleasesController implements GeneratedHeader {
                 .map(ReleasesModel ->
                         ResponseEntity.ok().body(Mapper.releasesModelResponse(ReleasesModel)))
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/amount")
+    public ResponseEntity<BigDecimal> getAmount(@RequestParam String id, @RequestParam TypeReleases type){
+        return Service.findById(UUID.fromString(id))
+                .map(ReleasesModel -> {
+                    Service.getTotalAmount(type, ReleasesModel);
+                    return ResponseEntity.ok().body(ReleasesModel.getAmount());
+                }).orElseGet(()-> ResponseEntity.notFound().build());
     }
 }

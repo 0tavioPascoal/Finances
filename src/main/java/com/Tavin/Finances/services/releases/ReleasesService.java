@@ -1,7 +1,6 @@
 package com.Tavin.Finances.services.releases;
 
 import com.Tavin.Finances.entities.ReleasesModel;
-import com.Tavin.Finances.entities.UserModel;
 import com.Tavin.Finances.entities.enuns.StatusReleases;
 import com.Tavin.Finances.entities.enuns.TypeReleases;
 import com.Tavin.Finances.repository.ReleasesRepository;
@@ -9,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.UUID;
@@ -68,14 +68,32 @@ public class ReleasesService {
         Repository.save(releasesModel);
     }
 
-    public void updatedStatus(ReleasesModel releasesModel, StatusReleases status) {
-        releasesModel.setStatus(status);
+    public void updatedStatus(ReleasesModel releasesModel, StatusReleases statusReleases) {
+        if(releasesModel.getStatus() == null || releasesModel.getStatus() == statusReleases) {
+            throw new IllegalArgumentException("To update, the releases must already be registered");
+        }
+        releasesModel.setStatus(statusReleases);
         Repository.save(releasesModel);
     }
 
     public void updatedTypeReleases(ReleasesModel releasesModel, TypeReleases type) {
+        if(releasesModel.getType()==null || releasesModel.getType() == type) {
+            throw new IllegalArgumentException("To update, the releases must already be registered");
+        }
         releasesModel.setType(type);
         Repository.save(releasesModel);
+    }
+
+    public BigDecimal getTotalAmount(TypeReleases type, ReleasesModel releasesModel) {
+        ReleasesModel rmAux = new ReleasesModel();
+        rmAux.setType(type);
+            if(rmAux.getType() == TypeReleases.PROHIBITED) {
+                return releasesModel.getAmount();
+            }else {
+                return  releasesModel.getAmount();
+            }
+
+
     }
 
 

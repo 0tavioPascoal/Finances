@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -17,4 +16,5 @@ public interface ReleasesRepository extends JpaRepository<ReleasesModel, UUID>, 
     boolean existsByUser(UserModel user);
 
     Optional<ReleasesModel> findByAmountAndDescriptionAndDayAndYearAndMonth(BigDecimal amount, String description, Integer day, Integer year, Integer month);
+
 }
