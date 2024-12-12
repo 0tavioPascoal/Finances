@@ -9,8 +9,12 @@ public record UserRequestDto(
                 @Size(min = 1, max = 100)
         String name,
         @NotBlank
-            @Size(min = 8, max = 100)
+            @Size(min = 1, max = 100)
         String password,
+
+        @NotBlank
+        String login,
+
         @NotBlank
             @Email
         String email) {

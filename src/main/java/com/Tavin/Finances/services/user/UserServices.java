@@ -4,6 +4,7 @@ import com.Tavin.Finances.entities.UserModel;
 import com.Tavin.Finances.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -14,9 +15,13 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserServices {
 
+    private final PasswordEncoder passwordEncoder;
+
     private final UserRepository userRepository;
 
     public void save(UserModel user) {
+        var senha = user.getPassword();
+        user.setPassword(passwordEncoder.encode(senha));
         userRepository.save(user);
     }
 
